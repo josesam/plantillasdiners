@@ -1,0 +1,103 @@
+<h3 style="text-align: center;"><span style="font-family: arial,helvetica,sans-serif;">FINANCIAMIENTO DE VEH&Iacute;CULOS - Tabla de amortizaci&oacute;n<br />Datos iniciales</span></h3>
+<table style="width: 100%;" border="0">
+<tbody>
+<tr>
+<td style="width: 25%; text-align: right; background-color: #c0c0c0;">Monto:</td>
+<td style="width: 25%; background-color: #99ccff;">$voucher.capital</td>
+<td style="width: 25%; background-color: #c0c0c0; text-align: right;" scope="col">Nombre del Cliente</td>
+<td style="width: 25%; background-color: #99ccff;">$nombreCliente</td>
+</tr>
+<tr>
+<td style="background-color: #c0c0c0; text-align: right;" scope="col">Tasa de interes anual:</td>
+<td style="background-color: #99ccff;">$venta.Valores.TasaInteres %</td>
+<td style="width: 25%; background-color: #c0c0c0; text-align: right;" scope="col">C&eacute;dula de Identidad</td>
+<td style="width: 25%; background-color: #99ccff;">$cliente.cedulaRuc</td>
+</tr>
+<tr>
+<td style="background-color: #c0c0c0; text-align: right;" scope="col">Plazo en a&ntilde;os:</td>
+<td style="background-color: #99ccff;">$venta.Valores.PlazoAnios()</td>
+<td style="width: 25%; background-color: #c0c0c0; text-align: right;" scope="col">Fecha del cr&eacute;dito</td>
+<td style="background-color: #ffff00;">$venta.FechaContrato|corta</td>
+</tr>
+<tr>
+<td style="background-color: #c0c0c0; text-align: right;" scope="col">Pagos por a&ntilde;o:</td>
+<td>12</td>
+<td style="width: 25%; background-color: #c0c0c0; text-align: right;" scope="col">Vencimiento primer pago:</td>
+<td style="background-color: #ffff00;">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<table style="width: 100%;" border="0">
+<tbody>
+<tr>
+<td style="width: 25%; text-align: right;"><strong>CUOTA MENSUAL</strong></td>
+<td style="width: 25%;">$costos.cuotaMensual</td>
+<td style="width: 25%; text-align: right;"><strong>NUMERO DE CUOTAS</strong></td>
+<td style="width: 25%;">$nombreCliente</td>
+</tr>
+<tr>
+<td style="width: 200px; text-align: right;">Usar el pago:</td>
+<td>$financiamiento.tasaInteres</td>
+<td style="width: 200px; text-align: right;">Saldo inicial antes del pago</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td style="width: 200px; text-align: right;">Primer pago en la tabla:</td>
+<td>1</td>
+<td style="width: 200px; text-align: right;">Inter&eacute;s acumulado antes del pago</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<h3 style="text-align: center;">Tabla</h3>
+<p>#set($tabla = $servicios.amortizacion.ParaVenta($venta))</p>
+<table style="width: 100%;" border="0">
+<tbody>
+<tr>
+<td><strong>N&ordm;</strong></td>
+<td><strong>Fecha de Pago*</strong></td>
+<td><strong>Saldo Inicial</strong></td>
+<td><strong>Inter&eacute;s</strong></td>
+<td><strong>Capital</strong></td>
+<td><strong>Saldo Final</strong></td>
+<td><strong>Inter&eacute;s acumulado</strong></td>
+</tr>
+#foreach ($f in $tabla.Lineas)
+<tr>
+<td>$f.NumCuota</td>
+<td>$f.FecPago|corta</td>
+<td>$f.SaldoInicial|numero</td>
+<td>$f.Interes|numero</td>
+<td>$f.Capital|numero</td>
+<td>$f.SaldoFinal|numero</td>
+<td>$f.InteresAcumulado|numero</td>
+</tr>
+#end</tbody>
+</table>
+<p>&nbsp;</p>
+<table style="width: 100%; height: 95px;" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="10%">&nbsp;</td>
+<td style="width: 35%; border-bottom-width: 1px; border-bottom-style: solid;" align="center">&nbsp;</td>
+<td width="10%">&nbsp;</td>
+<td style="width: 35%; border-bottom-width: 1px; border-bottom-style: solid;" align="center">&nbsp;</td>
+<td width="10%">&nbsp;</td>
+</tr>
+<tr>
+<td width="10%">&nbsp;</td>
+<td align="center" width="35%">FIRMA CLIENTE
+  $nombreCliente
+  $cliente.cedulaRuc</td>
+<td width="10%">&nbsp;</td>
+<td align="center" width="35%">FIRMA CÓNYUGUE
+  $conyuge.nombres 
+  $conyuge.apellidos
+  $conyuge.cedulaRuc</td>
+<td width="10%">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>* Fecha a ser facturada en su estado de cuenta de la Tarjeta Diners Club.</p>
